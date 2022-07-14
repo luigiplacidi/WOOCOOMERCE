@@ -1,0 +1,15 @@
+add_filter( 'woocommerce_available_payment_gateways' , 'change_payment_gateway', 20, 1);
+
+/**
+ * remove cod gateway if cart total < 99
+ * @param $gateways
+ * @return mixed
+ */
+function change_payment_gateway( $gateways ){
+    // Compare cart subtotal (without shipment fees)
+    if( WC()->cart->subtotal < 99 ){
+         // then unset the 'cod' key (cod is the unique id of COD Gateway)
+         unset( $gateways['cod'] );
+    }
+    return $gateways;
+}
